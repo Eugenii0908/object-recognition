@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse, FileResponse
 from contextlib import asynccontextmanager
 from ultralytics import YOLO
 from PIL import Image
+from fastapi.middleware.cors import CORSMiddleware
 import io
 import os
 import uuid
@@ -38,6 +39,14 @@ app = FastAPI(
     title="YOLO Object Detection API", # Название API
     # Описание
     description="API возвращает JSON с данными объектов и ссылкой на размеченное изображение"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Эндпоинт для обработки изображений
